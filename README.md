@@ -1,6 +1,14 @@
 
 # SunPower Web Monitor
 
+**IMPORTANT:** Beginning September 2025, SunPower released firmware version 2025.9 build 61845. Their new firmware has removed the cgi-bin API used by this project. Which means it no longer works with the *PVS Solar Energy Dashboard* unless the PVS6 gateway firmware is version 2025.06 build 61839 or older.
+
+This issue currently affects all cloud connected PVS6 gateways. SunPower has announced that PVS5 gateways will receive a similar firmware update in the future.
+
+> ⚠️ Note: Although the PVS6's cgi-bin API has been removed by SunPower's latest firmware, their new release officially supports a varserver API. Unfortunately this project is not compatible with it.
+
+## PVS Solar Energy Dashboard
+
 The **PVS Solar Energy Dashboard** is a web-based viewer for monitoring data from a SunPower Solar System that uses a PVS5/PVS6 Gateway. It reports the model and serial number of every provisioned device in the system. Additionally, it displays power production, power consumption, and mains voltages. Each panel in your solar array also reports its DC volts, DC amps, and Microinverter AC voltages.
 
 > ⚠️ Note: Battery storage status is **not** currently supported. This feature will be added in the future—once a generous anonymous donor pays for the installation of a *SunVault* at the author’s residence. If you know such a person, please invite them to check out this project!
@@ -46,7 +54,7 @@ The two Ethernet (LAN) ports have different purposes, as follows:
 
 - **LAN1** is the Ethernet port that enables Dashboard functionality.
 
-- It was originally intended for installer use. Unfortunately, SunPower disabled the built-in PVS Management App. It was a web-based commissioning interface that allowed installers to provision or repair systems. Today, those tasks require a proprietary installer's App.
+- It was originally intended for installer use. Unfortunately, SunPower disabled the built-in *PVS Management App.* It was a web-based commissioning interface that allowed installers to provision systems. Today, those tasks require the *SunPower Pro Connect* which is a phone application for authorized installers.
 
 - Thankfully, the LAN1 **API** remains functional.
 
