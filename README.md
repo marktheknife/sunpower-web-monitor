@@ -1,11 +1,16 @@
 
 # SunPower Web Monitor
 
-**IMPORTANT:** Beginning September 2025, SunPower released firmware version 2025.9 build 61845. Their new firmware has removed the cgi-bin API used by this project. Which means it no longer works with the *PVS Solar Energy Dashboard* unless the PVS6 gateway firmware is version 2025.06 build 61839 or older.
+**IMPORTANT:** Beginning September 2025, SunPower released firmware version 2025.9 build 61845. Their new firmware has imposed an authorization requirement (username, password) to the dl_cgi API used by this project. Which means it no longer works with the *PVS Solar Energy Dashboard* unless the gateway's firmware is version 2025.06 build 61839 or older.
 
 This issue currently affects all cloud connected PVS6 gateways. SunPower has announced that PVS5 gateways will receive a similar firmware update in the future.
 
-> ⚠️ Note: Although the PVS6's cgi-bin API has been removed by SunPower's latest firmware, their new release officially supports a varserver API. Unfortunately this project is not compatible with it.
+> ⚠️ Note: You may have heard that Sunpower's new release officially supports the varserver API. Unfortunately, access to it also requires authorization.
+
+The good news is that the new firmware has eliminated the need for connecting directly to the Ethernet LAN1 installer port. Now your local network can be used with the IP address assigned by your router. That's right, WiFi connections are now supported!
+
+**What does this all mean?** Well, the dashboard needs to be updated to work with the latest firmware. And that task is done! It still uses the dl_cgi API for realtime data updates (immediate data versus varserver's five minute updates). The revised dashboard will be released as soon as validation is complete. Stay tuned!
+
 
 ## PVS Solar Energy Dashboard
 
