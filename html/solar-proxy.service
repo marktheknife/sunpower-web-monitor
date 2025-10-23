@@ -1,0 +1,13 @@
+[Unit]
+Description=SunPower PVS6 Proxy + Dashboard (Flask)
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pi/solar_dashboard
+ExecStart=/home/pi/solar_dashboard/venv/bin/python /home/pi/solar_dashboard/proxy.py
+Restart=always
+User=pi
+Environment=PATH=/home/pi/solar_dashboard/venv/bin:/usr/bin:/bin
+
+[Install]
+WantedBy=multi-user.target

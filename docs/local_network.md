@@ -1,10 +1,11 @@
 # Local Network Setup
 
-You can set up the PVS on your local network—but not directly. While it takes a bit of extra effort, it’s worth it.
+You can set up the PVS on your local network. While it takes a bit of extra effort, it’s worth it.
+
+> **IMPORTANT:**
+> These instructions are for **PVS firmware versions 2025.06 Build 61839 and earlier** (pre-authentication firmware). If your firmware version is **2025.09 Build 61845 or newer**, return to the [main project page](../README.md#dashboard-installation) and follow the *New Firmware* installation instructions.
 
 Connecting the PVS to your network isn’t a basic plug-and-play setup. That’s because the PVS's LAN1 port includes a built-in DHCP service, which conflicts with the DHCP provided by your home router. To make local access work properly, you’ll need a special router to "bridge" the PVS and your home network.
-
-> ⚠️ Note: The Dashboard does **not** work with the Wi-Fi provided by the PVS. Because that connection is dedicated to sending data to SunPower’s cloud servers.
 
 ---
 

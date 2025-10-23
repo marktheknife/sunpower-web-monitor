@@ -1,18 +1,14 @@
-<!--
-File:    solar_dashboard.html
-Author:  ThomasB
-Version: 1.3
-Origin:  Jul-29-2025
-Update:  Aug-15-2025
-github:  https://github.com/thomastech
--->
+<!-- VERSION 2.0, Oct-17-2025, T. BLACK-->
+<!-- SEE footer_vers TAG FOR DISPLAYED VERSION -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PVS Solar Energy Dashboard</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='30' fill='%23FFD700'/%3E%3Cg transform='translate(50 50)'%3E%3Cpath d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(45)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(90)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(135)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(180)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(225)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(270)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(315)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3C/g%3E%3C/svg%3E">
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='30' fill='%23FFD700'/%3E%3Cg transform='translate(50 50)'%3E%3Cpath d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(45)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(90)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(135)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(180)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(225)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(270)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(315)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3C/g%3E%3C/svg%3E">  
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -29,13 +25,19 @@ github:  https://github.com/thomastech
     h1 {
       margin: 0;
       font-size: 1.8rem;
+      cursor: pointer;
     }
-    section {
-      padding: 1rem 2rem;
+    #warning {
+      text-align: center;
+      color: #b00;
+      font-size: 1.0rem;
+      font-weight: bold;
+      margin: 1rem auto;
+      padding: 0.5rem;
     }
     .section-title {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+      margin: 1rem 2rem 0.5rem;
       font-weight: bold;
       color: #333;
     }
@@ -43,6 +45,7 @@ github:  https://github.com/thomastech
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
+      padding: 0 2rem;
     }
     .card {
       background: white;
@@ -59,64 +62,31 @@ github:  https://github.com/thomastech
       height: 40px;
       margin-bottom: 0.5rem;
     }
-    .label {
-      font-size: 0.95rem;
-      color: #555;
-    }
-    .value {
-      font-size: 1.6rem;
-      font-weight: bold;
-      color: #222;
-    }
-    .panels {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 0.5rem;
-    }
-    .panel {
-      background: #e0f7fa;
-      border-radius: 8px;
-      padding: 0.5rem;
-      text-align: center;
-      font-size: 1.1rem;
-    }
-    .footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: #666;
-    }
-    button {
-      display: block;
-      margin: 1rem auto;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-    }
-    .system-info {
-      padding: 1rem 2rem;
-    }
-    .system-info .info-line {
-      font-size: 1rem;
-      margin: 0.25rem 0;
-    }
-    .net-icon {
-    stroke: var(--stroke-color);
-    }
+    .label { font-size: 1.1rem; color: #555; }
+    .value { font-size: 1.6rem; font-weight: bold; color: #222; }
+    .panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 0.5rem; padding: 0 2rem; }
+    .panel { background: #e0f7fa; border-radius: 8px; padding: 0.5rem; text-align:center; font-size:1.1rem; }
+    .system-info { margin: 0.25rem 0; }
+    .system-info .info-line { font-size: 1rem; margin: 0.25rem 2.5rem; }
+    .footer { text-align: center; padding: 1rem; font-size: 0.95rem; color: #666; }
+    .footer_vers { text-align: center; padding: 1rem; font-size: 0.80rem; color: #666; }
+    button { display: block; margin: 1rem auto; padding: 0.5rem 1rem; font-size: 1rem; }
+    .net-icon { stroke: var(--stroke-color, black); } /* default stroke color = black */
   </style>
 </head>
 <body>
   <header>
-
-<h1 style="cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;" onclick="fetchData()">
-  <span title="Click to refresh">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="#FFD700" xmlns="http://www.w3.org/2000/svg">
+    <h1 onclick="manualRefresh()">
+     <span title="Click to refresh">
+       <svg width="28" height="28" viewBox="0 0 24 24" fill="#FFD700" xmlns="http://www.w3.org/2000/svg">
       <path d="M6.76 4.84l-1.8-1.79L3.17 4.84 4.93 6.6 6.76 4.84zm10.45 14.32l1.79 1.8 1.79-1.8-1.8-1.79-1.78 1.79zM12 4V1h-1v3h1zm0 16v3h1v-3h-1zm8.49-8.49h3v-1h-3v1zM1 11.5v1h3v-1H1zm2.34 7.95l1.79-1.8-1.8-1.79-1.79 1.8 1.8 1.79zM17.25 6.75l1.79-1.79-1.8-1.8-1.79 1.8 1.8 1.79zM12 7a5 5 0 100 10 5 5 0 000-10z"/>
-    </svg>
-  </span>
-  PVS Solar Energy Dashboard
-</h1>
-
+       </svg>
+     PVS Solar Energy Dashboard
+     </span>
+    </h1>
   </header>
+
+  <div id="warning"></div>
 
   <section>
     <div class="section-title">Power Performance</div>
@@ -152,174 +122,310 @@ github:  https://github.com/thomastech
   </section>
 
   <div class="footer" id="updated">Last updated: ...</div>
-  <button onclick="fetchData()">🔄 Refresh Now</button>
+  <button onclick="manualRefresh()">🔄 Refresh Now</button>
 
-  <script>
-   function getIpFromUrl(defaultIp) {
-    const params = new URLSearchParams(window.location.search);
-     for (const [key, value] of params.entries()) {
-       if (key.toLowerCase() === 'ip' && value) {
-         return value;
-       }
-     }
-     return defaultIp;
+<script>
+const REFRESH_INTERVAL = 20 * 1000; // 20 seconds
+const params = new URLSearchParams(window.location.search);
+let stopFetch = false;
+let refreshTmrID = null;  // holds the interval ID
+
+// If credentials provided but no IP -> show persistent warning and stop auto fetch
+if ((params.get('user') || params.get('pass')) && !params.get('ip')) {
+  document.getElementById('warning').textContent =
+    "⚠ Credentials provided without IP address. Please correct your browser URL (see documentation).";
+  stopFetch = true;
+}
+
+function buildProxyUrl() {
+  // Because proxy serves both static page and /devices from the same origin (port 5000),
+  // use relative URL to invoke it.
+  let url = '/devices';
+  const qs = new URLSearchParams();
+  if (params.get('ip')) qs.set('ip', params.get('ip'));
+  if (params.get('user')) qs.set('user', params.get('user'));
+  if (params.get('pass')) qs.set('pass', params.get('pass'));
+  const q = qs.toString();
+  if (q) url += '?' + q;
+  return url;
+}
+
+function manualRefresh() {
+  fetchData();
+  if (refreshTmrID != null) {
+   clearInterval(refreshTmrID);
+  //console.log("Stop RefreshID: " + refreshTmrID);
+  }
+  refreshTmrID = setInterval(fetchData, REFRESH_INTERVAL);
+  //console.log("Start RefreshID: " + refreshTmrID);
+}
+
+// Run Once at startup, populate page with data and start refresh timer
+if (!stopFetch) {
+  fetchData();
+  refreshTmrID = setInterval(fetchData, REFRESH_INTERVAL);
+}
+
+function getIpFromUrl(defaultIp) {
+  const params = new URLSearchParams(window.location.search);
+  for (const [key, value] of params.entries()) {
+    if (key.toLowerCase() === 'ip' && value) {
+      return value;
     }
+  }
+  return defaultIp;
+}
 
-    const IP_ADDR = getIpFromUrl("172.27.153.1");
-    const DEVICE_LIST = "/cgi-bin/dl_cgi?Command=DeviceList";
-    const URL = "http://" + IP_ADDR + DEVICE_LIST;
-    const REFRESH_INTERVAL = 15 * 1000;  // 15 secs refresh
-    //const REFRESH_INTERVAL = 15 * 60 * 1000; // 15 min refresh
+// fetchData() supports old firmware (no auth) and the newer firmware (uses auth).
+async function fetchData() {
+  if (stopFetch) return;
 
-    async function fetchData() {
-      try {
-        const res = await fetch(URL);
-        const data = await res.json();
-        const devices = data.devices;
+  document.getElementById('updated').textContent = "Refreshing Data ...";
 
-        const meterP = devices.find(d => d.TYPE === "PVS5-METER-P");
-        const meterC = devices.find(d => d.TYPE === "PVS5-METER-C");
-        const gateway = devices.find(d => d.DEVICE_TYPE === "PVS");
-        const inverters = devices.filter(d => d.TYPE === "SOLARBRIDGE");
+  const IP_ADDR = getIpFromUrl("172.27.153.1");
+  const DEVICE_LIST = "/cgi-bin/dl_cgi/devices/list";
+  const URL_NO_AUTH = "http://" + IP_ADDR + DEVICE_LIST;
+  const URL_AUTH = buildProxyUrl();
+  let res = null;
+  let urlStr = "";
 
-        //const productionKw = parseFloat(meterP?.p_3phsum_kw || 0);
-        const productionKw = parseFloat((meterP?.p_3phsum_kw || 0) <= 0.005 ? 0 : (meterP?.p_3phsum_kw || 0));
-        const consumptionKw = parseFloat((meterC?.p_3phsum_kw || 0) <= 0.005 ? 0 : (meterC?.p_3phsum_kw || 0));
-        const rawPowerFactorP = Math.abs(parseFloat(meterP?.tot_pf_rto || 0)) < 0.1 ? 0 : parseFloat(meterP?.tot_pf_rto || 0);
-        const rawPowerFactorC = parseFloat(meterC?.tot_pf_rto || 0);
-        const powerFactorP = rawPowerFactorP * 100;
-        const powerFactorC = rawPowerFactorC * 100;
-        const netKw = productionKw - consumptionKw;
-        const lifetimeKwh = parseFloat(meterP?.net_ltea_3phsum_kwh || 0);
-        const voltageSystem = parseFloat(meterC?.v12_v || 0);
-        const voltageL1 = parseFloat(meterC?.v1n_v || 0);
-        const voltageL2 = parseFloat(meterC?.v2n_v || 0);
-        const updateTime = meterP?.CURTIME || "";
-        const netcolor  = netKw >= 0.01 ? 'green' : 'red'; // Net Power Icon Color.
-        const netexport = netKw >= 0.01 ? '(Export)' : ''; // Show "(Export)" msg if >10W.
-        const prodcolor = productionKw > 0.0 ? 'yellow' : 'blue'; // Production Icon Color, blue if under 1W.
+  try {
+    if (!params.get('user') && !params.get('pass')) {
+      //console.log("Old Firmware, Credentials not used.");
+      urlStr = URL_NO_AUTH;
+      res = await fetch(URL_NO_AUTH);
+    }
+    else {
+      //console.log("New Firmware, Credentials used.");
+      urlStr = URL_AUTH;
+      res = await fetch(URL_AUTH, { method: 'GET' });
+    }
+    
+    if (!res.ok) {
+      const text = await res.text().catch(()=>'');
+      // If no credentials and gateway replies 403 -> warn user that firmware needs auth
+      if (res.status === 403 && !(params.get('user') && params.get('pass'))) {
 
-        document.getElementById("today").innerHTML = `
-          <div class="card">
-            <svg fill="#3c5" viewBox="0 0 48 48"><path d="M24 6c-10.1 0-18 7.9-18 18s7.9 18 18 18 18-7.9 18-18-7.9-18-18-18zm0 32c-7.7 0-14-6.3-14-14s6.3-14 14-14 14 6.3 14 14-6.3 14-14 14z"/></svg>
-            <div class="label">Lifetime Solar</div>
-            <div class="value">${lifetimeKwh.toFixed(2)} kWh</div>
-          </div>
-          <div class="card">
-            <svg id="productionIcon" class="pout-icon" viewBox="0 0 48 48"><path d="M24 6c-10.1 0-18 7.9-18 18s7.9 18 18 18 18-7.9 18-18-7.9-18-18-18zm0 32c-7.7 0-14-6.3-14-14s6.3-14 14-14 14 6.3 14 14-6.3 14-14 14z"/></svg>
-            <div class="label">Solar Output</div>
-            <div class="value">${productionKw.toFixed(2)} kW</div>
-          </div>
-          <div class="card">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.386 1.154 4.435 3 5.742V17h8v-2.258c1.846-1.307 3-3.356 3-5.742a7 7 0 0 0-7-7z"/></svg>
-            <div class="label">Consumption</div>
-            <div class="value">${consumptionKw.toFixed(2)} kW</div>
-          </div>
-          <div class="card">
-            <svg id="netPowerIcon" class="net-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l-2 2 2 2"/><path d="M16 12l2-2-2-2"/></svg>
-            <div class="label">Net Power ${netexport}</div>
-            <div class="value">${netKw.toFixed(2)} kW</div>
-          </div>
-        `;
-
-        document.getElementById('productionIcon').setAttribute('fill', prodcolor); // Apply color to Production Icon
-        document.getElementById('netPowerIcon').style.setProperty('--stroke-color', netcolor); // Apply color to Net Power Icon
-
-        document.getElementById("systemvolts").innerHTML = `
-          <div class="card">
-            <svg fill="#fbc02d" width="18" height="18" viewBox="0 0 24 24" style="vertical-align: middle;"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
-            <div class="label">System Voltage (L1+L2)</div>
-            <div class="value">${voltageSystem.toFixed(1)} V</div>
-          </div>
-          <div class="card">
-            <svg fill="#fbc02d" width="18" height="18" viewBox="0 0 24 24" style="vertical-align: middle;"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
-            <div class="label">L1 Voltage</div>
-            <div class="value">${voltageL1.toFixed(1)} V</div>
-          </div>
-          <div class="card">
-            <svg fill="#fbc02d" width="18" height="18" viewBox="0 0 24 24" style="vertical-align: middle;"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
-            <div class="label">L2 Voltage</div>
-            <div class="value">${voltageL2.toFixed(1)} V</div>
-          </div>
-        `;
-
-        document.getElementById("powerfactor").innerHTML = `
-          <div class="card">
-              <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 12c2-6 6-6 8 0s6 6 12 0" />
-                <path d="M2 12c2-6 6-6 8 0s6 6 12 0" transform="translate(2,0)"/>
-                <path d="M6 12 A3 3 0 0 1 8 10.5" />
-              </svg>
-            <div class="label">Production</div>
-            <div class="value">${powerFactorP.toFixed(1)}%</div>
-          </div>
-          <div class="card">
-            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 12c2-6 6-6 8 0s6 6 12 0" />
-                <path d="M2 12c2-6 6-6 8 0s6 6 12 0" transform="translate(2,0)"/>
-                <path d="M6 12 A3 3 0 0 1 8 10.5" />
-              </svg>
-            <div class="label">Consumption</div>
-            <div class="value">${powerFactorC.toFixed(1)}%</div>
-          </div>
-        `;
-
-        const maxKw = Math.max(...inverters.map(inv => parseFloat(inv.p_3phsum_kw || 0)));
-        document.getElementById("panels").innerHTML = inverters.map((inv, i) => {
-        const kwRaw = parseFloat(inv.p_3phsum_kw || 0);
-        const kw = kwRaw.toFixed(3);
-        const watt = kw * 1000;
-        const vac = parseFloat(inv.vln_3phavg_v || 0).toFixed(1);
-        const vdc = parseFloat(inv.v_mppt1_v || 0).toFixed(1);
-        const adc = parseFloat(inv.i_mppt1_a || 0).toFixed(2);
-        const tempC = parseFloat(inv.t_htsnk_degc || 0);
-        const tempF = Math.round(tempC * 9/5 + 32);
-      //const bgColor = ((kwRaw <= 0.80 * maxKw) && (kwRaw >= 0.025)) ? '#fff9c4' : '#e0f7fa'; // yellow=low performers, cyan=OK
-        const bgColor = ((kwRaw <= 0.80 * maxKw) && (kwRaw >= 0.025)) ? '#f5f5dc' : '#e0f7fa'; // beige=low performers, cyan=OK
-
-        return `
-         <div class="panel" style="background: ${bgColor};">
-          <strong style="font-size: 1.375rem; font-weight: bold;">${watt} Watts</strong><br/>
-          Panel ${i + 1}<br/>
-          S/N: ${inv.SERIAL}<br/>
-          AC Volt: ${vac}<br/>
-          DC Volt: ${vdc}<br/>
-          DC Amp: ${adc}<br/>
-          🌡️ ${tempC}°C (${tempF}°F)<br/>
-          ✔ ${inv.STATEDESCR}
-         </div>
-        `;
-        }).join("");
-
-        document.getElementById("gateway").textContent = `Gateway: ${gateway?.MODEL}`;
-        document.getElementById("ip").textContent = `Gateway IP: ${IP_ADDR}`;
-        document.getElementById("serial").textContent = `S/N: ${gateway?.SERIAL}`;
-        document.getElementById("hwver").textContent = `HW Vers: ${gateway?.HWVER}`;
-        document.getElementById("swver").textContent = `Firmware: ${gateway?.SWVER}`;
-        document.getElementById("state").textContent = `State: ${gateway?.STATE}`;
-        document.getElementById("memused").textContent = `Mem Used: ${gateway?.dl_mem_used}`;
-        document.getElementById("panid").textContent = `Panel ID: ${gateway?.panid}`;
-        document.getElementById("ctdescr").textContent = `Consumption CT: ${meterC?.subtype}`;
-
-        let parts = updateTime.split(',');
-        let formattedDate = parts[0] + '-' + parts[1] + '-' + parts[2];
-        let formattedTime = parts[3] + ':' + parts[4] + ':' + parts[5];
-        let finalFormattedString = "Last update: " + formattedDate + '  ' + formattedTime + ' UTC';
-
-        document.getElementById("updated").textContent = finalFormattedString;
-      //document.getElementById("updated").textContent = "Last updated: " + updateTime.replace(/,/g, "/").replace(/(\d{2})$/, ":00");
-
-      } catch (e) {
-        console.error("Fetch error:", e);
         document.getElementById("updated").innerHTML = `
-        <div>Error loading data.</div>
-        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #b00;">Failed URL: ${URL}</div>
+        <div>Error loading data</div>
+        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #b00;">Failed URL: ${urlStr}</div>
         `;
+
+        document.getElementById('warning').textContent =
+          "⚠ Your PVS6 firmware appears to require authentication. Please provide credentials per Dashboard documentation.";
+        stopFetch = true;
+        return;
       }
+      
+      // If credentials provided but 403 -> auth failed
+      if (res.status === 403 && (params.get('user') && params.get('pass'))) {
+        document.getElementById('warning').textContent =
+          "⚠ Authentication failed. Check username/password in URL.";
+          
+        document.getElementById("updated").innerHTML = `
+        <div>Error loading data</div>
+        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #b00;">Check URL Credentials</div>
+        `;
+        
+        stopFetch = true;
+        return;
+      }
+      
+      // otherwise show the proxy message in the updated area and stop
+      document.getElementById('updated').innerHTML = `
+      <div>Error loading data</div>
+      <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #b00;">HTTP ${res.status}</div>
+      <pre style="white-space:pre-wrap">${text}</pre>`;
+      stopFetch = true;
+      return;
     }
 
-    fetchData();
-    setInterval(fetchData, REFRESH_INTERVAL);
-  </script>
+    const data = await res.json();
+    const devices = data.devices || [];
+
+    const meterP = devices.find(d => d.TYPE === "PVS5-METER-P");
+    const meterC = devices.find(d => d.TYPE === "PVS5-METER-C");
+    const gateway = devices.find(d => d.DEVICE_TYPE === "PVS");
+    const inverters = devices.filter(d => d.TYPE === "SOLARBRIDGE");
+
+    const productionKwRaw = parseFloat(meterP?.p_3phsum_kw || 0);
+    const productionKw = productionKwRaw <= 0.005 ? 0 : productionKwRaw;
+    const consumptionKwRaw = parseFloat(meterC?.p_3phsum_kw || 0);
+    const consumptionKw = consumptionKwRaw <= 0.005 ? 0 : consumptionKwRaw;
+
+    const netKw = productionKw - consumptionKw;
+    const lifetimeKwh = parseFloat(meterP?.net_ltea_3phsum_kwh || 0);
+    const voltageSystem = parseFloat(meterC?.v12_v || 0);
+    const voltageL1 = parseFloat(meterC?.v1n_v || 0);
+    const voltageL2 = parseFloat(meterC?.v2n_v || 0);
+    const updateTime = meterP?.CURTIME || "";
+
+    const netcolor  = netKw >= 0.01 ? 'green' : 'red';
+    const netexport = netKw >= 0.01 ? '(Export)' : '';
+    const prodcolor = productionKw > 0.0 ? 'yellow' : 'blue';
+    
+    
+    // display-safe strings for numeric values
+    const lifetimeKwhDisplay = isNaN(lifetimeKwh) ? "N/A" : lifetimeKwh.toFixed(2);
+    const productionKwDisplay = isNaN(productionKw) ? "N/A" : productionKw.toFixed(2);
+    const consumptionKwDisplay = isNaN(consumptionKw) ? "N/A" : consumptionKw.toFixed(2);
+    const netKwDisplay = isNaN(netKw) ? "N/A" : netKw.toFixed(2);
+
+    const voltageSystemDisplay = isNaN(voltageSystem) ? "N/A" : voltageSystem.toFixed(1);
+    const voltageL1Display = isNaN(voltageL1) ? "N/A" : voltageL1.toFixed(1);
+    const voltageL2Display = isNaN(voltageL2) ? "N/A" : voltageL2.toFixed(1);
+
+    const rawPowerFactorP = (function(){ let v = parseFloat(meterP?.tot_pf_rto); return isNaN(v) ? NaN : (Math.abs(v) < 0.1 ? 0 : v); })();
+    const rawPowerFactorC = parseFloat(meterC?.tot_pf_rto);
+    const powerFactorPDisplay = isNaN(rawPowerFactorP) ? "N/A" : (rawPowerFactorP * 100).toFixed(1);
+    const powerFactorCDisplay = isNaN(rawPowerFactorC) ? "N/A" : (rawPowerFactorC * 100).toFixed(1);
+
+    document.getElementById("today").innerHTML = `
+      <div class="card">
+        <svg fill="#3c5" viewBox="0 0 48 48"><path d="M24 6c-10.1 0-18 7.9-18 18s7.9 18 18 18 18-7.9 18-18-7.9-18-18-18zm0 32c-7.7 0-14-6.3-14-14s6.3-14 14-14 14 6.3 14 14-6.3 14-14 14z"/></svg>
+        <div class="label">Lifetime Solar</div>
+        <div class="value">${lifetimeKwhDisplay} kWh</div>
+      </div>
+      <div class="card">
+        <svg id="productionIcon" class="pout-icon" viewBox="0 0 48 48"><path d="M24 6c-10.1 0-18 7.9-18 18s7.9 18 18 18 18-7.9 18-18-7.9-18-18-18zm0 32c-7.7 0-14-6.3-14-14s6.3-14 14-14 14 6.3 14 14-6.3 14-14 14z"/></svg>
+        <div class="label">Solar Output</div>
+        <div class="value">${productionKwDisplay} kW</div>
+      </div>
+      <div class="card">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.386 1.154 4.435 3 5.742V17h8v-2.258c1.846-1.307 3-3.356 3-5.742a7 7 0 0 0-7-7z"/></svg>
+        <div class="label">Consumption</div>
+        <div class="value">${consumptionKwDisplay} kW</div>
+      </div>
+      <div class="card">
+        <svg id="netPowerIcon" class="net-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l-2 2 2 2"/><path d="M16 12l2-2-2-2"/></svg>
+        <div class="label">Net Power ${netexport}</div>
+        <div class="value" style="color:${netcolor}">${netKwDisplay} kW</div>
+      </div>
+    `;
+
+    document.getElementById('productionIcon').setAttribute('fill', prodcolor); // Apply color to Production Icon
+    document.getElementById('netPowerIcon').style.setProperty('--stroke-color', netcolor); // Apply color to Net Power Icon
+
+    document.getElementById("systemvolts").innerHTML = `
+      <div class="card">
+      <svg fill="#fbc02d" width="18" height="18" viewBox="0 0 24 24" style="vertical-align: middle;"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+      <div class="label">System Voltage (L1+L2)</div>
+       <div class="value">${voltageSystemDisplay} Vac</div>
+      </div>
+      <div class="card">
+      <svg fill="#fbc02d" width="18" height="18" viewBox="0 0 24 24" style="vertical-align: middle;"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+      <div class="label">L1 Voltage</div>
+       <div class="value">${voltageL2Display} Vac</div>
+      </div>
+      <div class="card">
+      <svg fill="#fbc02d" width="18" height="18" viewBox="0 0 24 24" style="vertical-align: middle;"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+      <div class="label">L2 Voltage</div>
+       <div class="value">${voltageL2Display} Vac</div>
+      </div>
+    `;
+
+    document.getElementById("powerfactor").innerHTML = `
+      <div class="card">
+      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 12c2-6 6-6 8 0s6 6 12 0" />
+        <path d="M2 12c2-6 6-6 8 0s6 6 12 0" transform="translate(2,0)"/>
+        <path d="M6 12 A3 3 0 0 1 8 10.5" />
+      </svg>
+      <div class="label">Production PF</div><div class="value">${(parseFloat(meterP?.tot_pf_rto || 0) * 100).toFixed(1)}%</div>
+      </div>
+      <div class="card">
+      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 12c2-6 6-6 8 0s6 6 12 0" />
+        <path d="M2 12c2-6 6-6 8 0s6 6 12 0" transform="translate(2,0)"/>
+        <path d="M6 12 A3 3 0 0 1 8 10.5" />
+      </svg>
+      <div class="label">Consumption PF</div><div class="value">${(parseFloat(meterC?.tot_pf_rto || 0) * 100).toFixed(1)}%</div></div>
+    `;
+
+    const maxKw = Math.max(...inverters.map(inv => parseFloat(inv.p_3phsum_kw || 0)));
+    
+    document.getElementById("panels").innerHTML = inverters.map((inv, i) => {
+      const kwRaw = parseFloat(inv.p_3phsum_kw || 0);
+      const wattDisplay = isNaN(kwRaw) ? "N/A" : Math.round(kwRaw * 1000);
+      const vacVal = parseFloat(inv.vln_3phavg_v || 0);
+      const vac = isNaN(vacVal) ? "N/A" : vacVal.toFixed(1);
+      const vdcVal = parseFloat(inv.v_mppt1_v || 0);
+      const vdc = isNaN(vdcVal) ? "N/A" : vdcVal.toFixed(1);
+      const adcVal = parseFloat(inv.i_mppt1_a || 0);
+      const adc = isNaN(adcVal) ? "N/A" : adcVal.toFixed(2);
+      const tempCVal = parseFloat(inv.t_htsnk_degc || 0);
+      const tempC = isNaN(tempCVal) ? "N/A" : tempCVal;
+      const tempF = isNaN(tempCVal) ? "N/A" : Math.round(tempCVal * 9/5 + 32);
+      const bgColor = ((kwRaw <= 0.85 * maxKw) && (kwRaw >= 0.025)) ? '#f5f5dc' : '#e0f7fa'; // beige=low performers, cyan=OK
+      return `
+       <div class="panel" style="background: ${bgColor};">
+        <strong style="font-size: 1.125rem; font-weight: bold;">${wattDisplay} W</strong><br/>
+        Panel ${i+1}<br/>
+        S/N: ${inv.SERIAL || ''}<br/>
+        AC: ${vac} V<br/>
+        DC: ${vdc} V / ${adc} A<br/>
+        🌡️ ${tempC}°C (${tempF}°F)<br/>
+        ${inv.STATEDESCR || ''}
+       </div>
+      `;
+    }).join("");
+
+    if (!inverters || inverters.length === 0) {
+        //console.log("inverters empty!");
+        document.getElementById("panels").innerHTML = `
+        <div class="panel" style="background: #fff9c4;">
+        <strong style="font-size: 1.125rem; font-weight: bold;">No Solar Panels Detected!</strong>
+        </div>
+        `;
+    }
+
+    document.getElementById("gateway").textContent = `Gateway: ${gateway?.MODEL || 'N/A'}`;
+    document.getElementById("ip").textContent = `Gateway IP: ${params.get("ip") || "default"}`;
+    document.getElementById("serial").textContent = `S/N: ${gateway?.SERIAL || 'N/A'}`;
+    document.getElementById("hwver").textContent = `HW Vers: ${gateway?.HWVER || 'N/A'}`;
+    document.getElementById("swver").textContent = `Firmware: ${gateway?.SWVER || 'N/A'}`;
+    document.getElementById("state").textContent = `State: ${gateway?.STATE || 'N/A'}`;
+    document.getElementById("memused").textContent = `Mem Used: ${gateway?.dl_mem_used || 'N/A'}`;
+    document.getElementById("panid").textContent = `Panel ID: ${gateway?.panid || 'N/A'}`;
+    document.getElementById("ctdescr").textContent = `Consumption CT: ${meterC?.subtype || 'N/A'}`;
+
+    // format date:time if present
+    if (updateTime) {
+      const parts = updateTime.split(',');
+      if (parts.length >= 6) {
+        const utcDate = new Date(Date.UTC(
+          parts[0],     // year
+          parts[1] - 1, // month (0-indexed)
+          parts[2],     // day
+          parts[3],     // hour
+          parts[4],     // minute
+          parts[5]      // second
+        ));
+        
+        const localTimeString = utcDate.toLocaleString(undefined, {
+          dateStyle: 'medium',
+          timeStyle: 'medium'
+        });
+        
+        document.getElementById("updated").textContent = `Last updated: ${localTimeString}`;
+      }
+    } else {
+      document.getElementById("updated").textContent = "Last updated: Unknown";
+    }
+
+  } catch (err) {
+    document.getElementById("warning").textContent = "⚠ Fetch failed: " + err.message;
+    document.getElementById("updated").innerHTML = `
+     <div>Error loading data</div>
+     <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #b00;">Failed URL: ${urlStr}</div>
+     `;
+    stopFetch = true;
+  }
+}
+</script>
+<br>
+<div class="footer_vers">Dashboard Version 2.0 • Build 2025.10<div>
+<br>
+<br>
 </body>
 </html>

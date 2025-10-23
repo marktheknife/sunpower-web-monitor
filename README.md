@@ -1,235 +1,216 @@
-
 # SunPower Web Monitor
 
-**IMPORTANT:** Beginning September 2025, SunPower released firmware version 2025.9 build 61845. Their new firmware has imposed an authentication requirement (username, password) to the dl_cgi API used by this project. Which means it no longer works with the *PVS Solar Energy Dashboard* unless the gateway's firmware is version 2025.06 build 61839 or older.
-
-This issue currently affects all cloud connected PVS6 gateways. SunPower has announced that PVS5 gateways will receive a similar firmware update in the future.
-
-> ⚠️ Note: You may have heard that Sunpower's new release officially supports the varserver API. Unfortunately, access to it also requires authentication.
-
-The good news is that the new firmware has eliminated the need for connecting directly to the Ethernet LAN1 installer port. Now your local network can be used with the IP address assigned by your router. That's right, WiFi connections are now supported!
-
-**What does this all mean?** Well, the dashboard needs to be updated to work with the latest firmware. And that task is done! It still uses the dl_cgi API for realtime data updates (immediate data versus varserver's five minute updates). The revised dashboard will be released as soon as validation is complete. Stay tuned!
-
-
+<img style="padding-left: 15px; padding-bottom: 5px;" align="right" src="images/dashboard2.png" width="165">
 ## PVS Solar Energy Dashboard
 
-The **PVS Solar Energy Dashboard** is a web-based viewer for monitoring data from a SunPower Solar System that uses a PVS5/PVS6 Gateway. It reports the model and serial number of every provisioned device in the system. Additionally, it displays power production, power consumption, and mains voltages. Each panel in your solar array also reports its DC volts, DC amps, and Microinverter AC voltages.
+The **PVS Solar Energy Dashboard** is a web-based viewer for monitoring data from a SunPower solar system that uses a **PVS5** or **PVS6** gateway. It reports the model and serial numbers of provisioned devices (battery excluded, if installed). It also displays power production, power consumption, and mains voltages. Each panel in your solar array reports its DC voltage, DC current, and microinverter AC voltages.
 
-> ⚠️ Note: Battery storage status is **not** currently supported. This feature will be added in the future—once a generous anonymous donor pays for the installation of a *SunVault* at the author’s residence. If you know such a person, please invite them to check out this project!
+> ⚠️ **Note:** Battery storage status is **not currently supported**.
+> This feature will be added in the future once a generous anonymous donor funds the installation of a *SunVault* at the author’s residence. If you know such a person, please invite them to check out this project!
 
-> 🔗 From this point forward, the PVS Solar Energy Dashboard will simply be referred to as the **Dashboard**.
+> 🔗 From this point forward, the PVS Solar Energy Dashboard will be referred to as the **Dashboard**.
+
+---
+
+## Gateway Firmware Compatibility
+
+Beginning in **September 2025**, SunPower released firmware version **2025.9 build 61845**. It added authentication (username and password) to the `dl_cgi` API used by this project. This release impacted the Dashboard.
+
+### The good news
+PVS gateways using SunPower's new firmware no longer require a direct Ethernet connection to the LAN1 installer port.
+The Dashboard can now use the LAN IP address assigned by your router, including via **Wi-Fi**.
+
+### The bad news
+The new firmware requires a **proxy** to handle session authentication. A custom **Python-based proxy** is used by this project.
+It can be installed on an existing Linux system or on a low-cost Raspberry Pi (RPi). The proxy uses minimal host resources.
+
+> 💡 **Tip:** Throughout this documentation the terms *PVS gateway*, *gateway*, and *PVS* are used interchangeably.
+
+---
 
 ## SunPower Bankruptcy
 
-The 2024 SunPower bankruptcy created a great deal of uncertainty for system owners. Warranty support for purchased systems was terminated, leaving repair costs in the hands of affected customers. This situation prompted the creation of the Dashboard project, which offers system information not available in the SunPower App.
+The **2024 SunPower bankruptcy** created significant uncertainty for system owners. Warranty support for purchased systems was terminated, leaving repair costs to system owners. This situation prompted the creation of the Dashboard project, which provides system information not available in the standard SunPower (SunStrong) app.
 
-As of the Dashboard’s creation date (July 2025), the bankruptcy situation has not improved much for system  owners. SunStrong, the new company's name, recently rebranded as "SunPower." But despite the return of the SunPower name, pre-bankruptcy customers have not seen restoration of their original warranty.
+---
 
 ## Dashboard Security
 
-The Dashboard does not use the cloud to access your SunPower system. All communication is performed locally using a hardwired Ethernet cable.
+The Dashboard does **not** use the cloud to access your SunPower system. All communication is performed locally on your network.
+
+---
 
 ## Dashboard Limitations
 
-In addition to displaying useful real-time data, the Dashboard can help with system troubleshooting. Failing components can be identified without climbing on the roof or deciphering JSON-formatted files. For example, locating the serial number of a faulty microinverter is the first step toward obtaining a warranty replacement from Enphase.
+The Dashboard displays useful real-time data and helps with troubleshooting. It can assist detecting failing components without climbing onto the roof. And in other ways too; Such as getting the serial number of a faulty microinverter, an important step to obtain an Enphase warranty replacement.
 
-However, the Dashboard **cannot** be used to commission a SunPower system or provision new devices. As of 2024, those tasks require the proprietary PVS Management App and SunPower's authorization to use it.
+However, the Dashboard **cannot** be used to commission a SunPower system or to provision new devices. As of 2024, those tasks require the proprietary PVS Management App and SunPower authorization.
 
-> 📝If your goal is to integrate your SunPower system into a home automation system, such as *Home Assistant* (HA), then keep in mind that this project is NOT needed for that. However, the Dashboard can certainly be used while you prepare your HA integration.
+> 📝 **Note:** If you plan to integrate your SunPower system with a home automation platform such as *Home Assistant* (HA), this project is **not required** for the integration. The Dashboard can still be useful while preparing your HA setup.
+
+---
 
 ## PVS Gateway
 
 <img style="padding-right: 15px; padding-bottom: 5px;" align="right" src="images/PVS5_1.png" width="150">
-<img style="padding-right: 15px; padding-bottom: 5px;" align="right" src="images/PVS6_1.png" width="150">
+<img style="padding-right: 15px; padding-bottom: 5px;" align="right" src="images/PVS6_1.png" width="175">
 
-The Dashboard has been tested with the PVS6 gateway and is expected to be compatible with the older PVS5 model as well. For simplicity, both models are referred to as **PVS** (Power Visualization System) in this document.
+The PVS (*Power Visualization System*) is a data logger and gateway device used for solar system monitoring, metering, and control.
 
-> 📝 The PVS is a data logger and gateway device used for solar system monitoring, metering, and control.
+The Dashboard has been tested with the **PVS6** gateway and is expected to be compatible with the older **PVS5** model as well. For simplicity, both models are referred to as **PVS** in this document.
 
-To retrieve data, a direct Ethernet connection is required. **Wi-Fi cannot be used.**
+---
 
-Inside the PVS are two Ethernet ports (LAN1 & LAN2) and other RJ45 jacks that **are not Ethernet**. Be cautious and use the correct port!
+## PVS Version Information
 
-## LAN Port Descriptions
+For clarity in these docs:
 
-The two Ethernet (LAN) ports have different purposes, as follows:
+- Firmware **2025.9 build 61845 and newer** → referred to as the **NEW** PVS firmware
+- Firmware **2025.06 build 61839 and older** → referred to as the **OLD** PVS firmware
 
-### LAN1: Dashboard Data
+It is important to determine your firmware version because installation methods differ.
 
-- **LAN1** is the Ethernet port that enables Dashboard functionality.
+### Checking your PVS firmware version
 
-- It was originally intended for installer use. Unfortunately, SunPower disabled the built-in *PVS Management App.* It was a web-based commissioning interface that allowed installers to provision systems. Today, those tasks require the *SunPower Pro Connect* which is a phone application for authorized installers.
+If your gateway is a **PVS6** that remains connected to the official SunPower (SunStrong) app, it is likely running the **NEW** firmware.
+As of **October 2025**, **PVS5** gateways typically still run the **OLD** firmware; SunPower has stated they will be updated in the future (date TBD).
 
-- Thankfully, the LAN1 **API** remains functional.
+Alternatively, from your local network open the following URL in a browser (replace `pvs_port_ip` with your gateway's local IP address):
 
-- The Dashboard webpage queries this API using IP address *172.27.153.1* on LAN1. This is a private network address, separated from the customer’s home network, which is why a direct Ethernet connection is required.
-
-> 🔗 Note: The URL *www.sunpowerconsole.com* has been disabled by SunPower. It was an alias for the PVS’s internal nameserver at *172.27.153.1*. Your browser must now use the IP address as the URL ([http://172.27.153.1](http://172.27.153.1)). Only http is accepted, https is not supported.
-
-### LAN2: Customer Cloud Data
-
-- **LAN2** is the Ethernet port that sends data to the SunPower cloud via the customer's router. Most systems use Wi-Fi for this, but Ethernet is also supported.
-
-- This connection enables access to power production and consumption data via the official SunPower app.
-
-- The Dashboard uses the LAN1 port, so LAN2 is not our concern.
-
-## Ethernet Cable Connection
-
-Rather than repeating installation steps here, please refer to the official PVS Residential Installation *Quick Start Guide* (**QSG**) for information on where to connect the LAN1 Ethernet cable:
-
-- **PVS6 QSG**: [[Click to view]](resources/PVS6_Installation1.pdf)
-- **PVS5 QSG**: [[Click to view]](resources/PVS5_Installation1.pdf)
-> 🔗 Note: The latest PVS6 hardware version will require a USB-to-Ethernet adapter (Dongle). Details are discussed in the PVS6 QSG.
+http://pvs_port_ip/vars?name=/sys/info/sw_rev
 
 
-## Ethernet Test
+- A valid JSON reply beginning with `"values"` indicates the **NEW** firmware.
+- An **HTTP 403** error commonly indicates the **OLD** firmware.
 
-Now that you have the PVS connected to your PC, it's time to check that the Ethernet connection is working. As follows:
+If you cannot determine the firmware version with certainty, try installing the Dashboard using the **OLD** firmware method first. No extra hardware is required to try it. If it doesn't work then try the **NEW** firmware method (which requires additional hardware).
 
-1. Turn off the PC's WiFi. Confirm it is off, otherwise the LAN1 test (and the Dashboard) will fail.
+---
 
-2. Launch your favorite browser and visit URL http://172.27.153.1
+## Dashboard Installation
 
-3. Confirm that a *403 Forbidden* error is displayed. It means that the IP is valid, but further access is disabled by SunPower. Despite sounding grim, the 403 error is good news.
-> ⚠️If a Connection Timeout occurs then there is a problem with your Ethernet configuration or connection. Be sure WiFi is turned off!
+The Dashboard is managed by an HTML file with embedded CSS and JavaScript. Installations for the **NEW** firmware require two additional files that handle the authentication proxy.
 
-4. Next, visit the following URL and confirm it replies with a *devices* report:</br>
-http://172.27.153.1:8080/cgi-bin/dl_cgi?Command=DeviceList
+The **OLD** PVS firmware does not require any additional hardware. However, the **NEW** PVS firmware requires a host computer running Linux or Raspberry Pi OS (RPi).
 
-5. If the report appears then you are ready to try the Dashboard. Congratulations, you're almost there!
-> 🔗 For those interested in using the Dashboard from your existing wireless network, please see the [FAQ](#faq) section at the bottom. But for now, continue with the next section.
+Before installing, confirm your PVS firmware version using the section above.
 
-## Dashboard File Installation
+- **OLD firmware users:** [Installation Instructions](./docs/Installation_Old_Firmware.md)
+- **NEW firmware users:** [Installation Instructions](./docs/Installation_New_Firmware.md)
 
-The Dashboard is a single HTML file. Save [solar_dashboard.html](https://github.com/thomastech/SunPower-Web-Monitor/releases/download/html/solar_dashboard.html) on your PC desktop. Alternatively, store it in a subfolder and create a desktop shortcut for quick access.
+---
 
-> 🔗 These instructions are for Windows users. Other operating systems may slightly differ.
+## Dashboard Data Reporting
 
-## Solar Energy Dashboard: Basic Operation
+**Basic behavior**
 
-On a Windows PC the Dashboard can be launched by double-clicking the file (or shortcut). Be sure WiFi is turned off!
+- Data automatically refreshes every **20 seconds**.
+- You can manually refresh by clicking the **yellow sun icon** at the top or the **[Refresh Now]** button at the bottom.
+- A timestamp above the refresh button shows the local time of the last update.
+- The page uses a **responsive** layout and resizes for desktop and mobile devices.
 
-Here's a screenshot.
+Here's a screenshot:
 
-<a href="images/dashboard1b.png" target="_blank" style="text-align: center; display: block;">
+<a href="images/dashboard1b.png" target="_blank" style="text-align: center; display: block;" alt="Click for larger image" align="center">
   <img src="images/dashboard1b.png" width="600" style="padding: 5px 15px 0 15px; display: block; margin: 0 auto;">
   <div style="font-size: 14px; color: #fff; text-align: center;"><strong>Click for Larger View</strong></div>
 </a>
-</br>
 
-Some basic information:
-- Data is automatically refreshed every **15 seconds**.
-- You can also manually refresh the page by clicking the **yellow sun icon** at the top of the page or the **[Refresh Now]** button at the bottom.
-- A timestamp above the refresh button shows the UTC time of the last update.
-- The web page layout is a responsive design. It resizes to fit desktop and mobile devices.
-
-## Solar Energy Dashboard: Data Sections
+---
 
 ### Power Performance
 
-The *Power Performance* section provides the following information:
+The *Power Performance* section provides:
 
-**Lifetime Solar:** Total accumulated power production (KWH) since system installation.
-
-**Solar Output:** The instantaneous power (KW) production. The circle icon will be yellow when panels are producing power. It turns blue when sunlight is insufficient.
-
-**Consumption:** The instantaneous power (KW) consumption.
-
-**Net Power:** The amount of net power (KW). It is power produced (Solar Output) minus power consumed. A negative value (red circle icon) indicates that more energy is being consumed than produced. The difference would need to come from the POCO (Power Company) or a SunVault. A green circle icon indicates that there is excess power which can be exported to the POCO or stored in a SunVault.
+- **Lifetime Solar:** Total accumulated production (kWh) since system installation.
+- **Solar Output:** Instantaneous production (kW). The circle icon is **yellow** when panels are producing and **blue** when sunlight is insufficient.
+- **Consumption:** Instantaneous consumption (kW).
+- **Net Power:** Production minus consumption (kW).
+  - A **red** circle indicates consumption exceeds production (drawing from the grid or SunVault).
+  - A **green** circle indicates surplus power available for export or storage.
 
 ---
 
 ### System Voltage
 
-The *System Voltage* section provides the following information:
+The *System Voltage* section provides:
 
-**System Voltage L1+L2:** The solar system's AC mains line voltage as measured across the L1 & L2 phase legs. Nominal is 240VAC.
-
-**L1 Voltage:** The L1 mains voltage. Nominal is 120VAC.
-
-**L2 Voltage:** The L2 mains voltage. Nominal is 120VAC.
+- **System Voltage (L1 + L2):** Line-to-line mains voltage (nominal 240 VAC).
+- **L1 Voltage:** Line 1 mains voltage (nominal 120 VAC).
+- **L2 Voltage:** Line 2 mains voltage (nominal 120 VAC).
 
 ---
 
 ### Power Factor
 
-The *Power Factor* section reports the ratio of *real power* versus *apparent power*. Ideal values will be close to 100%.
+The *Power Factor* section reports the ratio of **real power** to **apparent power**. Ideal values approach **100%**.
 
-A low percentage indicates how much deviation that current and voltage are out of phase. This is an unwanted situation that can occur with highly reactive loads from some household devices. The PVS cannot measure extremely low power factors; Inaccurate power usage may be reported.
+A low percentage indicates current and voltage are out of phase (often caused by highly reactive loads). The PVS cannot reliably measure extremely low power factors, so reported usage may be inaccurate in those cases.
 
-**Production:** The power factor value measured at the production side of the solar array's inverters.
-
-**Consumption:** The power factor value measured at the consumption side (power loads).
+- **Production:** Power factor measured on the production (inverter) side.
+- **Consumption:** Power factor measured on the consumption (load) side.
 
 ---
 
 ### Inverter Panel Grid
 
-The *Inverter Panel Grid* shows details for each solar panel in the array(s). Panels are normally blue but will change to yellow if they have significantly lower production wattage (<80%) than other panels.
+The *Inverter Panel Grid* shows details for each solar panel in the array(s). Panels normally appear **blue** and will turn **yellow** if their production is significantly lower (≈ <85%) than other panels.
 
-**Watts:** Instantaneous production wattage of the panel.
-
-**S/N:** The serial number of the panel's inverter.
-
-**AC Volt:** The AC output voltage of the inverter. Nominal is 240VAC.
-
-**DC Volt:** The DC output voltage of the solar panel.
-
-**DC Amp:** The DC output current of the solar panel.
-
-**🌡️ (temperature):** The temperature of the solar panel.
-
-**✔ (status):** The status of the solar panel. Reports either *Working* or *Error.* An Error typically means there is insufficient sunlight to produce power.
+| Metric | Description |
+|---|---|
+| **Watts** | Instantaneous panel output (W) |
+| **S/N** | Inverter serial number |
+| **AC Volt** | Inverter AC output voltage (nominal 240 VAC) |
+| **DC Volt** | Panel DC voltage |
+| **DC Amp** | Panel DC current |
+| **🌡️ Temperature** | Panel temperature |
+| **✔ Status** | *Working* or *Error* (an Error usually means insufficient sunlight) |
 
 ---
 
 ### System Information
 
-The *System Information* section provides the following information:
+The *System Information* section provides:
 
-**Gateway:** The gateway model description.
+| Parameter | Description |
+|---|---|
+| **Gateway** | Model description |
+| **Gateway IP** | IP address used to access the PVS |
+| **SN** | PVS serial number |
+| **HW Vers** | Hardware version |
+| **Firmware** | Firmware version |
+| **State** | Runtime state |
+| **Mem Used** | Memory usage (KiB) |
+| **Panel ID** | SunPower customer identification number |
+| **Consumption CT** | Subtype assigned to the consumption current transformer (CT)
 
-**Gateway IP:** The IP address used to access the PVS.
+---
 
-**SN:** The PVS unit's serial number.
+## Frequently Asked Questions (FAQ)
 
-**HW Vers:** The hardware version of the PVS.
+### FAQ 1. I am having problems getting the Dashboard to work. What do I do?
 
-**Firmware:** The firmware version of the PVS.
+See the FAQ sections in the [Dashboard Installation](#dashboard-installation) instructions. Note that **OLD** and **NEW** PVS firmware require different installation methods and each provides additional FAQ guidance.
 
-**State:** The runtime state of the PVS.
+---
 
-**Mem Used:** The amount of RAM used by the PVS, in KiB.
+### FAQ 2. Is the Dashboard secure?
 
-**Panel ID:** SunPower's customer identification number.
+The Dashboard runs locally and does **not** connect to external cloud services. Any security risks relate to your SunPower gateway or your local network configuration.
 
-**Consumption CT:** The subtype assigned to the consumption Current Transformer (CT). This value may be helpful if consumption wattage is missing or inaccurate.
+---
 
-## [FAQ](faq)
+### FAQ 3. Why doesn't the Dashboard show daily kWh or past history?
 
-### 1.
-**Q.** Can I connect the PVS to my local network so that I can use the Dashboard from multiple devices? It would be convenient to access it via my WiFi router, especially from a browser on my smartphone.
+If you want daily kWh or historical tracking, consider the SunPower integration for Home Assistant.
+👉 [Home Assistant SunPower Add-On](https://github.com/krbaker/hass-sunpower)
 
-**A.** Yes, this is a great way to use the Dashboard. For details, please review this document: [Local Network Setup.](./docs/local_network.md)
+---
 
-### 2.
-**Q.** I followed the [Local Network Setup](./docs/local_network.md) instructions and have successfully connected the PVS to my home's network. It works great when I am at home. But how can I use the Dashboard from another location, such as when I am traveling?
+### FAQ 4. How can I use the Dashboard remotely when I’m traveling?
 
-**A.** What you are describing could be accomplished with your router's port forwarding feature. Most IT professionals don't promote doing this due to the security risks from bad actors. Of course, there are protection measures that can be used, but details are beyond the scope of this project. Honestly, SunPower's cloud-based monitoring app (if it still works for you) is a recommended solution for basic remote monitoring. But even cloud connections have risk, so choose your poison wisely.
+You can use your router's **port forwarding**, but most IT professionals discourage this due to security risks. Protections exist, but they are beyond this project's scope. SunPower's cloud-based monitoring (if available for your system) is a typical alternative for remote access. All remote access has security trade-offs. Choose wisely.
 
-### 3.
-**Q.** Why doesn't the Dashboard show daily KWH or past history? It would be useful to see how much power was produced and/or consumed each day.
+---
 
-**A.** It sounds like you need to check out the SunPower add-on for Home Assistant. [[Click to view]](https://github.com/krbaker/hass-sunpower)
-
-
-### 4.
-**Q.** I cannot connect to the VPS. I've tried everything. Help.
-
-**A.** Check again and confirm your PC's WiFi is turned off. Do NOT use https in your URL, it MUST be http. If you are using a USB-to-Ethernet "Dongle" on your PVS6 then confirm it is an approved choice.
-
-<img style="padding-right: 15px; padding-bottom: 5px;" align="left" src="images/dongle1.png" width="275">The [PVS6 Residential Installation Quick Start Guide](resources/PVS6_Installation1.pdf) discusses the USB Dongle models that should be used (see Technical Notification section).
-
-Lastly, there is a rare chance that the PVS issued a different IP than the expected 172.27.153.1 address. For example, it may have used 172.27.152.1 or something similar. Review the properties of the PC's network settings to see what was assigned.
+© 2025 — SunPower Web Monitor Project
