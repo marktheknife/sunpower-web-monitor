@@ -1,6 +1,7 @@
 # SunPower Web Monitor
 
 <img style="padding-left: 15px; padding-bottom: 5px;" align="right" src="images/dashboard2.png" width="165">
+
 ## PVS Solar Energy Dashboard
 
 The **PVS Solar Energy Dashboard** is a web-based viewer for monitoring data from a SunPower solar system that uses a **PVS5** or **PVS6** gateway. It reports the model and serial numbers of provisioned devices (battery excluded, if installed). It also displays power production, power consumption, and mains voltages. Each panel in your solar array reports its DC voltage, DC current, and microinverter AC voltages.
@@ -112,7 +113,7 @@ Before installing, confirm your PVS firmware version using the section above.
 Here's a screenshot:
 
 <a href="images/dashboard1b.png" target="_blank" style="text-align: center; display: block;" alt="Click for larger image" align="center">
-  <img src="images/dashboard1b.png" width="600" style="padding: 5px 15px 0 15px; display: block; margin: 0 auto;">
+  <img src="images/dashboard1b.png" width="500" style="padding: 5px 15px 0 15px; display: block; margin: 0 auto;">
   <div style="font-size: 14px; color: #fff; text-align: center;"><strong>Click for Larger View</strong></div>
 </a>
 
