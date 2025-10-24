@@ -54,7 +54,7 @@ A clean OS installation is recommended, otherwise ensure it has the latest updat
 
 ### Installation workflow
 
-1. Flash the Raspberry Pi OS onto an SD card (if needed).
+1. Flash the Raspberry Pi OS onto an micro SD card (if needed).
 2. Update system packages and install Python 3.
 3. Create a project folder on the host system or Pi.
 4. Create a Python virtual environment using `venv`.
@@ -72,15 +72,15 @@ A clean OS installation is recommended, otherwise ensure it has the latest updat
 If you are installing on an existing host system, skip to the [Update system packages](#update-system-packages) section.
 
 If using a new Raspberry Pi (RPi):
-- Flash **Raspberry Pi OS Lite (32-bit)** to a high-endurance 16 GB (or larger) SD card.
-  This version is recommended for *Pi Zero* installations.
+- Flash the RPi OS to a high-endurance 16 GB (or larger) micro SD card.
+- **RPi OS Lite (32-bit) Debian Trixie** is recommended for *Pi Zero* installations.
 
 > 💡 **Tip:**
 > [The Raspberry Pi Imager](https://www.raspberrypi.com/news/raspberry-pi-imager-imaging-utility/) is highly recommended for creating the SD card.
 > It allows you to set the username, Wi-Fi SSID, and enable SSH during setup.
 > There are many online tutorials that explain how to use the Imager.
 
-Insert the SD card and boot the RPi. Log in from the RPi desktop or by remote SSH. User **pi** is typical, but your system may have a different username.
+Insert the micro SD card and boot the RPi. Log in from the RPi desktop or by remote SSH. User **pi** is typical, but your system may have a different username.
 
 The sections below provide all the steps for setting up the Dashboard software. Please execute the commands and actions in the order listed.
 
@@ -211,7 +211,7 @@ The Dashboard’s URL requires **four parameters**:
 |------------|-------------|
 | `<HOST_IP>` | LAN IP address of the host (Raspberry Pi). The port is always 5000. |
 | `<PVS_IP>` | LAN IP address of the PVS gateway |
-| `<USER>` | Always use `ssm_owner` |
+| `<USER>` | Always use ```ssm_owner``` |
 | `<PASSWORD>` | Last five characters of the PVS serial number |
 
 ---

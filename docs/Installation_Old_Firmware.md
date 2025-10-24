@@ -18,7 +18,7 @@ The Dashboard has been tested with the **PVS6** gateway and is expected to be co
 For simplicity, both models are referred to as **PVS** (*Power Visualization System*) in this document.
 
 To retrieve data, a **direct Ethernet connection** is required.
-It is possible to use the gateway’s Wi-Fi access point, but a wired connection is simpler and more reliable.
+It is possible to use the gateway’s Wi-Fi Access Point (AP), but a wired connection is simpler and more reliable.
 
 Inside the PVS are two Ethernet ports (**LAN1** and **LAN2**) and other RJ45 jacks that are **not Ethernet**.
 Be cautious and ensure you connect to the correct port!
@@ -35,7 +35,7 @@ The SunPower gateway’s two Ethernet (LAN) ports serve different purposes, as f
 - It was originally intended for installer use. SunPower has since disabled the built-in *PVS Management App*, a web-based commissioning interface that allowed installers to provision systems.
   Today, those tasks require the *SunPower Pro Connect* smartphone app for authorized installers.
 - Thankfully, the **LAN1 API** remains functional.
-- The Dashboard webpage queries this API using IP address `172.27.153.1` on LAN1. This is a private network address, isolated from the customer’s home network. Hence the need for a direct Ethernet connection.
+- The Dashboard webpage queries this API using IP address `172.27.153.1` on LAN1. This address is to a private server (hosted by the PVS) that has its own DNS. All of which must be isolated from your home's local network. Hence the need for a direct Ethernet connection.
 
 > 🔗 **Notes:** <br>
 > The URL `www.sunpowerconsole.com` has been disabled by SunPower. It was an alias for the PVS’s internal nameserver at `172.27.153.1`.
@@ -45,7 +45,7 @@ The SunPower gateway’s two Ethernet (LAN) ports serve different purposes, as f
 ### LAN2: Customer Cloud Data
 
 - **LAN2** is the Ethernet port that sends data to the SunPower cloud via the customer’s router. Most systems use Wi-Fi for this, but Ethernet is also supported.
-- This connection enables access to production and consumption data in the official SunPower app.
+- This connection enables access to the data that is reported in the official SunPower app.
 - The Dashboard uses **LAN1**, so **LAN2** is not needed for Dashboard operation.
 
 ---

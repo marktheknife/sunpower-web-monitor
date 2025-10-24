@@ -4,10 +4,9 @@
 
 ## PVS Solar Energy Dashboard
 
-The **PVS Solar Energy Dashboard** is a web-based viewer for monitoring data from a SunPower solar system that uses a **PVS5** or **PVS6** gateway. It reports the model and serial numbers of provisioned devices (battery excluded, if installed). It also displays power production, power consumption, and mains voltages. Each panel in your solar array reports its DC voltage, DC current, and microinverter AC voltages.
+The **PVS Solar Energy Dashboard** is a web-based viewer for monitoring a SunPower solar system that uses a **PVS5** or **PVS6** gateway. It displays the system's power production, consumption, and mains voltages. It shows each solar panel's DC voltage, DC current, and microinverter AC voltages. In addition, the Dashboard reports the model and serial numbers of all provisioned devices (gateways, panels, power meters).
 
-> ⚠️ **Note:** Battery storage status is **not currently supported**.
-> This feature will be added in the future once a generous anonymous donor funds the installation of a *SunVault* at the author’s residence. If you know such a person, please invite them to check out this project!
+> ⚠️ **Note:** Battery storage data is **NOT** supported. Unfortunately the Dashboard's creator does not have a *SunVault* battery to assist with feature development.
 
 > 🔗 From this point forward, the PVS Solar Energy Dashboard will be referred to as the **Dashboard**.
 
@@ -18,7 +17,7 @@ The **PVS Solar Energy Dashboard** is a web-based viewer for monitoring data fro
 Beginning in **September 2025**, SunPower released firmware version **2025.9 build 61845**. It added authentication (username and password) to the `dl_cgi` API used by this project. This release impacted the Dashboard.
 
 ### The good news
-PVS gateways using SunPower's new firmware no longer require a direct Ethernet connection to the LAN1 installer port.
+PVS gateways using SunPower's latest firmware no longer require a direct Ethernet connection to the LAN1 installer port.
 The Dashboard can now use the LAN IP address assigned by your router, including via **Wi-Fi**.
 
 ### The bad news
@@ -31,19 +30,21 @@ It can be installed on an existing Linux system or on a low-cost Raspberry Pi (R
 
 ## SunPower Bankruptcy
 
-The **2024 SunPower bankruptcy** created significant uncertainty for system owners. Warranty support for purchased systems was terminated, leaving repair costs to system owners. This situation prompted the creation of the Dashboard project, which provides system information not available in the standard SunPower (SunStrong) app.
+The **2024 SunPower bankruptcy** created significant uncertainty for system owners. Warranty support for purchased systems was terminated, leaving repair costs in the hands of system owners. This situation prompted the creation of the Dashboard project, which provides system information not available in the standard SunPower (SunStrong) app.
+
+One of the side affects of the Bankruptcy is the discontinuation of SunPower manufactured devices. One such victim is the PVS Gateway product line. This situation provides another reason to self-monitor; The Dashboard is an attractive alternative in case the SunPower App's *free* PVS monitoring becomes subscription based in the future.
 
 ---
 
 ## Dashboard Security
 
-The Dashboard does **not** use the cloud to access your SunPower system. All communication is performed locally on your network.
+The Dashboard does **not** use the cloud to access your SunPower system. It does not require access to the internet. All communication is performed locally on your network.
 
 ---
 
 ## Dashboard Limitations
 
-The Dashboard displays useful real-time data and helps with troubleshooting. It can assist detecting failing components without climbing onto the roof. And in other ways too; Such as getting the serial number of a faulty microinverter, an important step to obtain an Enphase warranty replacement.
+The Dashboard displays useful real-time data and helps with troubleshooting. It can assist detecting failing components without climbing on the roof. And in other ways too; Such as getting the serial number of a faulty microinverter, an important step to obtaining a warranty replacement directly from Enphase.
 
 However, the Dashboard **cannot** be used to commission a SunPower system or to provision new devices. As of 2024, those tasks require the proprietary PVS Management App and SunPower authorization.
 
@@ -56,7 +57,7 @@ However, the Dashboard **cannot** be used to commission a SunPower system or to 
 <img style="padding-right: 15px; padding-bottom: 5px;" align="right" src="images/PVS5_1.png" width="150">
 <img style="padding-right: 15px; padding-bottom: 5px;" align="right" src="images/PVS6_1.png" width="175">
 
-The PVS (*Power Visualization System*) is a data logger and gateway device used for solar system monitoring, metering, and control.
+SunPower's PVS (*Power Visualization System*) is a data logger and gateway device used for solar system monitoring, metering, and control.
 
 The Dashboard has been tested with the **PVS6** gateway and is expected to be compatible with the older **PVS5** model as well. For simplicity, both models are referred to as **PVS** in this document.
 
@@ -69,16 +70,16 @@ For clarity in these docs:
 - Firmware **2025.9 build 61845 and newer** → referred to as the **NEW** PVS firmware
 - Firmware **2025.06 build 61839 and older** → referred to as the **OLD** PVS firmware
 
-It is important to determine your firmware version because installation methods differ.
+It is important to determine your firmware version. Because Dashboard installation methods for them are different.
 
 ### Checking your PVS firmware version
 
-If your gateway is a **PVS6** that remains connected to the official SunPower (SunStrong) app, it is likely running the **NEW** firmware.
-As of **October 2025**, **PVS5** gateways typically still run the **OLD** firmware; SunPower has stated they will be updated in the future (date TBD).
+If your gateway is a **PVS6** that has remained connected to the official SunPower (SunStrong) app, it is likely running the **NEW** firmware.
+As of **October 2025**, **PVS5** gateways still run the **OLD** firmware; SunPower has stated they will be updated in the future (timeline unknown).
 
-Alternatively, from your local network open the following URL in a browser (replace `pvs_port_ip` with your gateway's local IP address):
+From your local network open the following URL in a browser (replace `pvs_port_ip` with your gateway's local IP address):
 
-http://pvs_port_ip/vars?name=/sys/info/sw_rev
+```http://pvs_port_ip/vars?name=/sys/info/sw_rev```
 
 
 - A valid JSON reply beginning with `"values"` indicates the **NEW** firmware.
@@ -92,7 +93,7 @@ If you cannot determine the firmware version with certainty, try installing the 
 
 The Dashboard is managed by an HTML file with embedded CSS and JavaScript. Installations for the **NEW** firmware require two additional files that handle the authentication proxy.
 
-The **OLD** PVS firmware does not require any additional hardware. However, the **NEW** PVS firmware requires a host computer running Linux or Raspberry Pi OS (RPi).
+The **OLD** PVS firmware does not require any additional hardware. However, the **NEW** PVS firmware requires a host computer running Linux or Raspberry Pi OS.
 
 Before installing, confirm your PVS firmware version using the section above.
 
@@ -125,7 +126,7 @@ The *Power Performance* section provides:
 
 - **Lifetime Solar:** Total accumulated production (kWh) since system installation.
 - **Solar Output:** Instantaneous production (kW). The circle icon is **yellow** when panels are producing and **blue** when sunlight is insufficient.
-- **Consumption:** Instantaneous consumption (kW).
+- **Consumption:** Instantaneous consumption (kW). Requires SunPower's optional consumption *current transformers* (CT).
 - **Net Power:** Production minus consumption (kW).
   - A **red** circle indicates consumption exceeds production (drawing from the grid or SunVault).
   - A **green** circle indicates surplus power available for export or storage.
