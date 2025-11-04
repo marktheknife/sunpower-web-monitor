@@ -15,7 +15,7 @@ These instructions are for **PVS firmware versions 2025.06 Build 61839 and earli
 The PVS is a data logger and gateway device used for solar system monitoring, metering, and control.
 
 The Dashboard has been tested with the **PVS6** gateway and is expected to be compatible with the older **PVS5** model as well.
-For simplicity, both models are referred to as **PVS** (*Power Visualization System*) in this document.
+For simplicity, both models are referred to as **PVS** (*Photovoltaic Supervisor*) in this document.
 
 To retrieve data, a **direct Ethernet connection** is required.
 It is possible to use the gateway’s Wi-Fi Access Point (AP), but a wired connection is simpler and more reliable.

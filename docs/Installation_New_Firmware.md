@@ -14,7 +14,7 @@ These instructions apply to **PVS firmware version 2025.09 Build 61845 and newer
 
 The PVS is a data logger and gateway device used for solar system monitoring, metering, and control.
 
-The Dashboard has been tested with the **PVS6** gateway, which is referred to as **PVS** (*Power Visualization System*) throughout this document.
+The Dashboard has been tested with the **PVS6** gateway, which is referred to as **PVS** (*Photovoltaic Supervisor*) throughout this document.
 
 > ⚠️ **Attention PVS5 Users:**
 > As of Oct-2025, SunPower has not yet released updated firmware for the older PVS5 gateway.
@@ -52,11 +52,11 @@ You can install them on an existing Linux system or on a low-cost **Raspberry Pi
 
 A clean OS installation is recommended, otherwise ensure it has the latest updates. The installation may fail on older OS distributions.
 
-### Installation workflow
+### Installation Workflow
 
-1. Flash the Raspberry Pi OS onto an micro SD card (if needed).
+1. Flash the Raspberry Pi OS onto a micro SD card (if needed).
 2. Update system packages and install Python 3.
-3. Create a project folder on the host system or Pi.
+3. Create a project folder on the host system.
 4. Create a Python virtual environment using `venv`.
 5. Install Flask (used for the authentication proxy and static web server).
 6. Copy the three project files.
@@ -86,7 +86,7 @@ The sections below provide all the steps for setting up the Dashboard software. 
 
 ---
 
-### Update system packages
+### Update System Packages
 
 Enter these commands:
 
@@ -105,7 +105,7 @@ sudo apt install -y python3 python3-venv python3-dev build-essential
 
 ---
 
-### Create the project folder
+### Create the Project Folder
 
 ```bash
 mkdir -p ~/solar_dashboard
@@ -114,7 +114,7 @@ cd ~/solar_dashboard
 
 ---
 
-### Create and activate the virtual environment
+### Create and Activate Virtual Environment
 
 ```bash
 python3 -m venv venv
@@ -123,7 +123,7 @@ source venv/bin/activate
 
 ---
 
-### Upgrade pip and install dependencies (Flask & Requests)
+### Upgrade pip and Install Dependencies (Flask & Requests)
 
 ```bash
 pip install --upgrade pip
@@ -134,7 +134,7 @@ When finished, the venv Python binary will be located at:
 
 ---
 
-### Move to the `/home/solar_dashboard` folder
+### Move to the `/home/solar_dashboard` Folder
 
 ```bash
 cd ~/solar_dashboard
@@ -150,7 +150,7 @@ wget -O proxy.py https://raw.githubusercontent.com/thomastech/SunPower-Web-Monit
 
 ---
 
-### Make `proxy.py` executable
+### Make `proxy.py` Executable
 
 ```bash
 chmod +x proxy.py
@@ -166,14 +166,14 @@ wget -O solar_dashboard.html https://raw.githubusercontent.com/thomastech/SunPow
 
 ---
 
-### Move to the `/etc/systemd/system` folder
+### Move to the `/etc/systemd/system` Folder
 
 ```bash
 cd /etc/systemd/system
 ```
 ---
 
-### Copy `solar-proxy.service` to `/etc/systemd/system/` as superuser (root)
+### Copy `solar-proxy.service` to `/etc/systemd/system/` as Superuser (root)
 
 ```bash
 sudo wget -O solar-proxy.service https://raw.githubusercontent.com/thomastech/SunPower-Web-Monitor/refs/heads/main/html/solar-proxy.service
@@ -182,7 +182,7 @@ sudo wget -O solar-proxy.service https://raw.githubusercontent.com/thomastech/Su
 
 ---
 
-### Enable and start the proxy
+### Enable and Start the Proxy
 
 ```bash
 sudo systemctl daemon-reload
@@ -192,7 +192,7 @@ sudo systemctl start solar-proxy
 
 ---
 
-### Check service status for errors
+### Check Service Status for Errors
 
 ```bash
 sudo systemctl status solar-proxy
@@ -233,8 +233,8 @@ http://192.168.1.197:5000/solar_dashboard.html?ip=192.168.1.199&user=ssm_owner&p
 
 Here’s a screenshot of the Dashboard:
 
-<a href="../images/dashboard1b.png" target="_blank" style="text-align: center; display: block;">
-  <img src="../images/dashboard1b.png" width="475" style="padding: 5px 15px 0 15px; display: block; margin: 0 auto;">
+<a href="../images/dashboard1d.png" target="_blank" style="text-align: center; display: block;">
+  <img src="../images/dashboard1d.png" width="475" style="padding: 5px 15px 0 15px; display: block; margin: 0 auto;">
   <div style="font-size: 14px; color: #fff; text-align: center;"><strong>Click for Larger View</strong></div>
 </a>
 
@@ -283,9 +283,10 @@ Avoid this by assigning **static IPs** to both devices.
 
 ### FAQ 3
 
-**Q.** The Dashboard was working fine, but now I get a [HTTP 500 error](../images/http_500_error1.jpg). What should I do?
+**Q.** The Dashboard was working fine. It still loads, but now it reports an [HTTP 500 error](../images/http_500_error1.jpg). What should I do?
 
-**A.** Power cycle (cold reboot) the PVS gateway. Wait about ten minutes and try the Dashboard again.
+**A.** Close the Dashboard web page. Wait a few minutes and then try again.<br>
+If that does not help then reboot (power cycle) the PVS gateway. Do not reboot the proxy host. Wait about ten minutes for the gateway to fully initialize and try again.
 
 ---
 

@@ -14,7 +14,7 @@ The **PVS Solar Energy Dashboard** is a web-based viewer for monitoring a SunPow
 
 ## Gateway Firmware Compatibility
 
-Beginning in **September 2025**, SunPower released firmware version **2025.9 build 61845**. It added authentication (username and password) to the `dl_cgi` API used by this project. This release impacted the Dashboard.
+Beginning in **September 2025**, SunPower launched firmware version **2025.9 build 61845** for the PVS6 gateway. It added authentication (username and password) to the `dl_cgi` API used by this project. This release impacted the Dashboard.
 
 ### The good news
 PVS gateways using SunPower's latest firmware no longer require a direct Ethernet connection to the LAN1 installer port.
@@ -57,7 +57,7 @@ However, the Dashboard **cannot** be used to commission a SunPower system or to 
 <img style="padding-right: 15px; padding-bottom: 5px;" align="right" src="images/PVS5_1.png" width="150">
 <img style="padding-right: 15px; padding-bottom: 5px;" align="right" src="images/PVS6_1.png" width="175">
 
-SunPower's PVS (*Power Visualization System*) is a data logger and gateway device used for solar system monitoring, metering, and control.
+SunPower's PVS (*Photovoltaic Supervisor*) is a data logger and gateway device used for solar system monitoring, metering, and control.
 
 The Dashboard has been tested with the **PVS6** gateway and is expected to be compatible with the older **PVS5** model as well. For simplicity, both models are referred to as **PVS** in this document.
 
@@ -113,8 +113,8 @@ Before installing, confirm your PVS firmware version using the section above.
 
 Here's a screenshot:
 
-<a href="images/dashboard1b.png" target="_blank" style="text-align: center; display: block;" alt="Click for larger image" align="center">
-  <img src="images/dashboard1b.png" width="500" style="padding: 5px 15px 0 15px; display: block; margin: 0 auto;">
+<a href="images/dashboard1d.png" target="_blank" style="text-align: center; display: block;" alt="Click for larger image" align="center">
+  <img src="images/dashboard1d.png" width="500" style="padding: 5px 15px 0 15px; display: block; margin: 0 auto;">
   <div style="font-size: 14px; color: #fff; text-align: center;"><strong>Click for Larger View</strong></div>
 </a>
 
