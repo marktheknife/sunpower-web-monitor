@@ -75,7 +75,7 @@ It is important to determine your firmware version. Because Dashboard installati
 ### Checking your PVS firmware version
 
 If your gateway is a **PVS6** that has remained connected to the official SunPower (SunStrong) app, it is likely running the **NEW** firmware.
-As of **October 2025**, **PVS5** gateways still run the **OLD** firmware; SunPower has stated they will be updated in the future (timeline unknown).
+Beginning late **October 2025**, Sunpower began updating **PVS5** gateways to the **New** firmware. This rollout should have hit most gateways by the time your read this.
 
 From your local network open the following URL in a browser (replace `pvs_port_ip` with your gateway's local IP address):
 
