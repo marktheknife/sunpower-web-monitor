@@ -17,8 +17,8 @@ The PVS is a data logger and gateway device used for solar system monitoring, me
 The Dashboard has been tested with the **PVS6** gateway, which is referred to as **PVS** (*Photovoltaic Supervisor*) throughout this document.
 
 > ⚠️ **Attention PVS5 Users:**
-> As of Oct-2025, SunPower has not yet released updated firmware for the older PVS5 gateway.
-> They have announced plans to release new firmware that includes the same authentication feature found in the *New* PVS6 firmware.
+> Beginning late Oct 2025, SunPower started to rollout a firmware upgrade for the PVS5 gateway (2025.10 5408).
+> The new firmware includes the authentication feature found in the *New* PVS6 firmware.
 > Use the instructions below **only after** your PVS5 has been updated.
 
 To retrieve data, a direct Ethernet connection to the gateway unit is **NOT** required.
@@ -71,9 +71,9 @@ A clean OS installation is recommended, otherwise ensure it has the latest updat
 
 If you are installing on an existing host system, skip to the [Update system packages](#update-system-packages) section.
 
-If using a new Raspberry Pi (RPi):
+If setting up a new Raspberry Pi (RPi):
 - Flash the RPi OS to a high-endurance 16 GB (or larger) micro SD card.
-- **RPi OS Lite (32-bit) Debian Trixie** is recommended for *Pi Zero* installations.
+- **RPi OS Lite Debian Trixie 64-bit** is recommended for *Pi Zero 2 W* installations.
 
 > 💡 **Tip:**
 > [The Raspberry Pi Imager](https://www.raspberrypi.com/news/raspberry-pi-imager-imaging-utility/) is highly recommended for creating the SD card.
