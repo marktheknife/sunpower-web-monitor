@@ -42,7 +42,7 @@ Before beginning installation, perform a quick LAN connectivity test:
 
 3. Confirm that the response is a valid JSON output beginning with `"values"`.
    - If an HTTP error occurs, power cycle the gateway, wait ten minutes, then try again.
-   - If the issue persists, review the [Checking PVS Firmware Version](../README.md#checking-pvs-firmware-version) section on the main project page.
+   - If the issue persists, review the [Checking PVS Firmware Version](../README.md#checking-your-pvs-firmware-version) section on the main project page.
 
 ---
 
