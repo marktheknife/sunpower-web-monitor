@@ -156,4 +156,4 @@ For details, review this document: [Local Network Setup](./local_network.md).
 
 ---
 
-© 2025 — SunPower Web Monitor Project
+© 2025-2026   SunPower Web Monitor Project

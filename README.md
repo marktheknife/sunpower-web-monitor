@@ -215,4 +215,4 @@ You can use your router's **port forwarding**, but most IT professionals discour
 
 ---
 
-© 2025 — SunPower Web Monitor Project
+© 2025-2026   SunPower Web Monitor Project

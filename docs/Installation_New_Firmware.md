@@ -1,9 +1,9 @@
 # Dashboard Installation Instructions for *New* PVS Firmware
 
-These instructions apply to **PVS firmware version 2025.09 Build 61845 and newer**.
+These instructions apply to PVS6 firmware version 2025.09 Build 61845 and newer. Plus PVS5 firmware version 2025.11 build 5412 and newer.
 
 > **IMPORTANT:**
-> If your firmware version is **2025.06 Build 61839 or earlier**, return to the [main project page](../README.md#dashboard-installation) and follow the *Old Firmware* installation instructions.
+> If your firmware version is an earlier release then return to the [main project page](../README.md#dashboard-installation) and follow the *Old Firmware* installation instructions.
 
 ---
 
@@ -17,12 +17,12 @@ The PVS is a data logger and gateway device used for solar system monitoring, me
 The Dashboard has been tested with the **PVS6** gateway, which is referred to as **PVS** (*Photovoltaic Supervisor*) throughout this document.
 
 > ⚠️ **Attention PVS5 Users:**
-> Beginning late Oct 2025, SunPower started to rollout a firmware upgrade for the PVS5 gateway (2025.10 5408).
+> Beginning Nov 2025, SunPower started to rollout a firmware upgrade for the PVS5 gateway (2025.11 5412).
 > The new firmware includes the authentication feature found in the *New* PVS6 firmware.
 > Use the instructions below **only after** your PVS5 has been updated.
 
 To retrieve data, a direct Ethernet connection to the gateway unit is **NOT** required.
-The latest PVS firmware allows access through your local network's WiFi using the LAN IP address assigned by your router.
+The latest PVS firmware allows access through your local network's WiFi using the LAN IP address assigned by your router. Do NOT use the optional WAN ethernet port's IP address with the Web Monitor because this port is for outbound data only (SunStrong Cloud).
 
 ---
 
@@ -30,8 +30,9 @@ The latest PVS firmware allows access through your local network's WiFi using th
 
 Before beginning installation, perform a quick LAN connectivity test:
 
-1. Determine the IP address of your PVS gateway.
+1. Ensure the PVS is connected to your LAN via WiFi. Determine its IP address.
    - You can find it in your router’s **DHCP Client List**.
+   - The router will specify if it is a wired or WiFi IP. Always choose the WiFi IP.
 
 2. Open a web browser and visit:
    ```
@@ -49,6 +50,8 @@ Before beginning installation, perform a quick LAN connectivity test:
 
 The Dashboard installation requires copying **three files** from the project’s `html` folder.
 You can install them on an existing Linux system or on a low-cost **Raspberry Pi** (any model, including the Pi Zero).
+
+The installation example provided below is for a RaspBerry Pi. But these instructions can be used on other hardware that is running a modern linux distro.
 
 A clean OS installation is recommended, otherwise ensure it has the latest updates. The installation may fail on older OS distributions.
 
@@ -73,7 +76,7 @@ If you are installing on an existing host system, skip to the [Update system pac
 
 If setting up a new Raspberry Pi (RPi):
 - Flash the RPi OS to a high-endurance 16 GB (or larger) micro SD card.
-- **RPi OS Lite Debian Trixie 64-bit** is recommended for *Pi Zero 2 W* installations.
+- **RPi OS Debian Trixie 64-bit** is recommended. *Pi Zero 2 W* installations should use the "Lite" variant.
 
 > 💡 **Tip:**
 > [The Raspberry Pi Imager](https://www.raspberrypi.com/news/raspberry-pi-imager-imaging-utility/) is highly recommended for creating the SD card.
@@ -178,7 +181,12 @@ cd /etc/systemd/system
 ```bash
 sudo wget -O solar-proxy.service https://raw.githubusercontent.com/thomastech/SunPower-Web-Monitor/refs/heads/main/html/solar-proxy.service
 ```
-> ⚠️ **Attention:** If your username is not **pi**, edit the solar-proxy.service file and update the `User=pi` line and ALL related paths (five places total) with the correct name.
+> ⚠️ **Attention:** If your username is not **pi**, edit the solar-proxy.service file in folder /etc/systemd/system/ and update the `User=pi` line and ALL related paths (five places total) with the correct username. The five places to edit can be seen in the image below.
+
+<p align="center" width="100%">
+    <img width="50%" src="../images/solar-proxy_service1.jpg">
+</p>
+
 
 ---
 
@@ -268,6 +276,8 @@ For details on the Dashboard’s data reporting, visit the [main page](../README
 
 **A.** Do **not** use HTTPS in your URL, It must be **HTTP**. Also confirm the host computer’s IP address.
 
+Do not use the WAN ethernet port to access to the PVS6. This port is firewalled and can only perform outbound connections. To be clear, you must use WiFi access to connect to the PVS6.
+
 ---
 
 ### FAQ 2
@@ -290,4 +300,13 @@ If that does not help then reboot (power cycle) the PVS gateway. Do not reboot t
 
 ---
 
-© 2025 — SunPower Web Monitor Project
+### FAQ 3
+
+**Q.** My PVS often goes offline. Sometimes it won't respond for hours and I have to power cycle it using the breaker. What should I do?
+
+**A.** If it is currently connected to your router by 2.4G WiFi, try moving it to to 5.8G. In some cases a WiFi extender will be needed to improve the signal level.<br>
+These changes might not prevent the problem entirely. But they might reduce the offline time to mere minutes instead of hours.
+
+---
+
+© 2025-2026  SunPower Web Monitor Project
