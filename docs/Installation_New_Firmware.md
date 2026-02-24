@@ -262,7 +262,41 @@ This confirms that the proxy was automatically started by the **systemd** servic
 
 For details on the Dashboard’s data reporting, visit the [main page](../README.md#dashboard-data-reporting).
 
+
 ---
+
+## Dashboard: Software Updates
+
+Installing a new *solar_dashboard.html* file is as simple as copying it to your host, same as you did in the initial installation. No other steps required.
+
+However, updating the proxy.py and/or solar-proxy.service files will require some extra steps. As follows:
+
+Stop the proxy service.
+
+```bash
+sudo systemctl stop solar-proxy
+```
+
+Copy the new *proxy.py* and *solar-proxy.service* files using the same method as the initial installation.
+
+Next, make proxy.py executable.
+
+```bash
+cd ~/solar_dashboard
+chmod +x proxy.py
+```
+
+Then restart the proxy as follows:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart solar-proxy
+```
+
+The updated system is now fully installed. Try it out and confirm it is working.
+
+---
+
 
 ## Frequently Asked Questions (FAQ)
 
@@ -296,7 +330,8 @@ Avoid this by assigning **static IPs** to both devices.
 **Q.** The Dashboard was working fine. It still loads, but now it reports an [HTTP 500 error](../images/http_500_error1.jpg). What should I do?
 
 **A.** Close the Dashboard web page. Wait a few minutes and then try again.<br>
-If that does not help then reboot (power cycle) the PVS gateway. Do not reboot the proxy host. Wait about ten minutes for the gateway to fully initialize and try again.
+If that does not help then reboot (power cycle) the PVS gateway. Do not reboot the proxy host. Wait about ten minutes for the gateway to fully initialize and try again.<br>
+If you are running version 2.0 or earlier, then upgrade to the latest release (2.1 or higher).
 
 ---
 

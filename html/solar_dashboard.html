@@ -1,4 +1,4 @@
-<!-- VERSION 2.0, Oct-17-2025, T. BLACK-->
+<!-- VERSION 2.1, Feb-23-2026, T. BLACK-->
 <!-- SEE footer_vers TAG FOR DISPLAYED VERSION -->
 
 <!DOCTYPE html>
@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PVS Solar Energy Dashboard</title>
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='30' fill='%23FFD700'/%3E%3Cg transform='translate(50 50)'%3E%3Cpath d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(45)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(90)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(135)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(180)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(225)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(270)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(315)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3C/g%3E%3C/svg%3E">  
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='30' fill='%23FFD700'/%3E%3Cg transform='translate(50 50)'%3E%3Cpath d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(45)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(90)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(135)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(180)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(225)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(270)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3Cpath transform='rotate(315)' d='M0 -50 L0 -35' stroke='%23FFA500' stroke-width='5'/%3E%3C/g%3E%3C/svg%3E">
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -200,7 +200,7 @@ async function fetchData() {
       urlStr = URL_AUTH;
       res = await fetch(URL_AUTH, { method: 'GET' });
     }
-    
+
     if (!res.ok) {
       const text = await res.text().catch(()=>'');
       // If no credentials and gateway replies 403 -> warn user that firmware needs auth
@@ -216,21 +216,21 @@ async function fetchData() {
         stopFetch = true;
         return;
       }
-      
+
       // If credentials provided but 403 -> auth failed
       if (res.status === 403 && (params.get('user') && params.get('pass'))) {
         document.getElementById('warning').textContent =
           "⚠ Authentication failed. Check username/password in URL.";
-          
+
         document.getElementById("updated").innerHTML = `
         <div>Error loading data</div>
         <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #b00;">Check URL Credentials</div>
         `;
-        
+
         stopFetch = true;
         return;
       }
-      
+
       // otherwise show the proxy message in the updated area and stop
       document.getElementById('updated').innerHTML = `
       <div>Error loading data</div>
@@ -263,8 +263,8 @@ async function fetchData() {
     const netcolor  = netKw >= 0.01 ? 'green' : 'red';
     const netexport = netKw >= 0.01 ? '(Export)' : '';
     const prodcolor = productionKw > 0.0 ? 'yellow' : 'blue';
-    
-    
+
+
     // display-safe strings for numeric values
     const lifetimeKwhDisplay = isNaN(lifetimeKwh) ? "N/A" : lifetimeKwh.toFixed(2);
     const productionKwDisplay = isNaN(productionKw) ? "N/A" : productionKw.toFixed(2);
@@ -343,7 +343,7 @@ async function fetchData() {
     `;
 
     const maxKw = Math.max(...inverters.map(inv => parseFloat(inv.p_3phsum_kw || 0)));
-    
+
     document.getElementById("panels").innerHTML = inverters.map((inv, i) => {
       const kwRaw = parseFloat(inv.p_3phsum_kw || 0);
       const wattDisplay = isNaN(kwRaw) ? "N/A" : Math.round(kwRaw * 1000);
@@ -401,12 +401,12 @@ async function fetchData() {
           parts[4],     // minute
           parts[5]      // second
         ));
-        
+
         const localTimeString = utcDate.toLocaleString(undefined, {
           dateStyle: 'medium',
           timeStyle: 'medium'
         });
-        
+
         document.getElementById("updated").textContent = `Last updated: ${localTimeString}`;
       }
     } else {
@@ -424,7 +424,7 @@ async function fetchData() {
 }
 </script>
 <br>
-<div class="footer_vers">Dashboard Version 2.0 • Build 2025.10<div>
+<div class="footer_vers">Dashboard Version 2.1 • Build 2026.02.1<div>
 <br>
 <br>
 </body>
