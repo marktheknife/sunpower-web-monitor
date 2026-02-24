@@ -277,9 +277,18 @@ Stop the proxy service.
 sudo systemctl stop solar-proxy
 ```
 
+
+Move to the `/home/solar_dashboard` Folder
+
+```bash
+cd ~/solar_dashboard
+```
+
 Copy the new *proxy.py* and *solar-proxy.service* files using the same method as the initial installation.
 
-Next, make proxy.py executable.
+Be sure to confirm the username used in the solar-proxy.service file is correct, as discussed in the initial installation instructions.
+
+Be sure to make proxy.py executable.
 
 ```bash
 cd ~/solar_dashboard
